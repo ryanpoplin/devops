@@ -11,16 +11,22 @@
             html, body {
                 margin: 0;
                 padding: 0;
+                position: fixed; /* the position is fixed and overflow is hidden to prevent any scrolling as well as the margin and padding being 0 = will make this a pure entire view a reality */
+                overflow: hidden;
             }
             #media-slider {
-
+                position: relative; /* all of the child elements of the #media-slider div that are absolutely positioned will be tightly coupled with measurements and values 'relative' to the parent element; #media-slider div */
+            }
+            .image-media {
+                width: 100%; /* width of this element will be 100% filling the width of its parent element */
+                /*visibility: hidden;*/
             }
         </style>
     </head>
     <body>
         <div id="media-slider">
             <!-- We'll need to include jQuery (CORE & DOM) for a minimal dynamic scripting solution; e.g. if the video collection has 4 videos to be played, we'll create enough 'img' elements to house them for the slider effects and consider lazy loading here, too -->
-            <img src="" alt="...">
+            <img class="image-media" src="img/pexels-photo-297755.jpeg" alt="...">
         </div>
     </body>
 </html>
