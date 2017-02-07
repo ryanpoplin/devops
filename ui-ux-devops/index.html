@@ -1,69 +1,77 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>...</title>
-        <style>
-            @keyframes layer1Anim {
-                0%{left:0;}
-                17%{left:0;}
-                33%{left:100%;}
-                50%{left:-100%;}
-                67%{left:0;}
-                100%{left:0;}
-            }
-            @keyframes layer2Anim {
-                0%{left:-100%;}
-                17%{left:-100%;}
-                33%{left:0;}
-                50%{left:0;}
-                67%{left:100%;}
-                100%{left:100%;}
-            }
-            /* Refactor this all with SCSS */
-            * {
-                box-sizing: border-box; /* borders, margins, etc; won't affect the size of the core element */
-            }
-            html, body {
-                margin: 0;
-                padding: 0;
-                position: fixed; /* the position is fixed and overflow is hidden to prevent any scrolling as well as the margin and padding being 0 = will make this a pure entire view a reality */
-                overflow: hidden;
-            }
-            #media-slider {
-                position: relative; /* all of the child elements of the #media-slider div that are absolutely positioned will be tightly coupled with measurements and values 'relative' to the parent element; #media-slider div */
-            }
-            #placeholder {
-                width: 100%; /* width of this element will be 100% filling the width of its parent element */
-                visibility: hidden;
-            }
-            .layer1, .layer2 {
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                top: 0;
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* Refactor this all with SCSS */
+        * {
+            box-sizing: border-box; /* borders, margins, etc; won't affect the size of the core element */
+        }
+        html, body {
+            margin: 0;
+            padding: 0;
+            position: fixed; /* the position is fixed and overflow is hidden to prevent any scrolling as well as the margin and padding being 0 = will make this a pure entire view a reality */
+            overflow: hidden;
+        }
+        #media-slider {
+            position: relative; /* all of the child elements of the #media-slider div that are absolutely positioned will be tightly coupled with measurements and values 'relative' to the parent element; #media-slider div */
+        }
+        #placeholder {
+            width: 100%; /* width of this element will be 100% filling the width of its parent element */
+            visibility: hidden;
+        }
+        /* these will be dynamic in jQuery */
+        .layer1, .layer2 {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .layer1 {
+            background-image: url(img/pexels-photo-297755.jpeg);
+            animation: layer1Anim .5s;
+        }
+        .layer2 {
+            background-image: url(img/pexels-photo-297755.jpeg);
+            animation: layer2Anim .5s;
+        }
+        @keyframes layer1Anim {
+            0% {
                 left: 0;
-                background-size: cover;
-                background-repeat: no-repeat;
             }
-            .layer1 {
-                background-image: url(img/pexels-photo-297755.jpeg);
-                border: 5px solid red;
-                animation: layer1Anim 5s infinite;
+            100% {
+                left: -100%;
             }
-            .layer2 {
-                background-image: url(img/pexels-photo-297755.jpeg);
-                border: 5px solid green;
-                animation: layer2Anim 5s infinite;
+        }
+        @keyframes layer2Anim {
+            0% {
+                left: 100%;
             }
-        </style>
-    </head>
-    <body>
-        <div id="media-slider">
-            <!-- We'll need to include jQuery (CORE & DOM) for a minimal dynamic scripting solution; e.g. if the video collection has 4 videos to be played, we'll create enough 'img' elements to house them for the slider effects and consider lazy loading here, too -->
-            <img id="placeholder" src="img/pexels-photo-297755.jpeg" alt="...">
-            <div class="layer1"></div>
-            <div class="layer2"></div>
-        </div>
-    </body>
+            100% {
+                left: 0;
+            }
+        }
+        /*label {*/
+            /*position: relative;*/
+            /*z-index: 4000;*/
+            /*color: yellow;*/
+        /*}*/
+    </style>
+</head>
+<body>
+<div id="media-slider">
+    <label for="slide-1-trigger">1</label>
+    <label for="slide-2-trigger">2</label>
+    <!-- We'll need to include jQuery (CORE & DOM) for a minimal dynamic scripting solution; e.g. if the video collection has 4 videos to be played, we'll create enough 'img' elements to house them for the slider effects and consider lazy loading here, too -->
+    <img id="placeholder" src="img/pexels-photo-297755.jpeg" alt="...">
+    <input id="slide-1-trigger" type="radio" name="slides" checked>
+    <div class="layer1 slide"></div>
+    <input id="slide-2-trigger" type="radio" name="slides">
+    <div class="layer2 slide"></div>
+</div>
+</body>
 </html>
