@@ -34,6 +34,12 @@
             $(function () {
                 slideInit();
                 function slideInit () {
+                    getData(function (data) {
+                        getTemplate(data);
+                        prepareSlide();
+                    });
+                }
+                function getData (cb) {
                     var videoCollectionDataArr = [
                         {
                             videoUrl: 'http://www.html5videoplayer.net/videos/toystory.mp4',
@@ -48,11 +54,16 @@
                             videoPosterUrl: 'http://www.html5videoplayer.net/poster/toystory.jpg'
                         }
                     ];
+                    cb(videoCollectionDataArr);
+                }
+                function getTemplate (data) {
                     var template = Handlebars.compile('<div class="slide"><video controls="controls" poster={{videoPosterUrl}}><source src={{videoUrl}} type="video/mp4" /><img alt="HTML5 MP4/H.264 Video" src={{videoPosterUrl}} title="No video playback capabilities, please download the video below" /></video></div>');
-                    videoCollectionDataArr.forEach(function (item) {
+                    data.forEach(function (item) {
                         var output = template(item);
                         $('#slider').append(output);
                     });
+                }
+                function prepareSlide () {
                     $('.slide').first().addClass('active');
                     $('.slide').hide();
                     $('.active').show();
