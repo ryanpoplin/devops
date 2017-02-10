@@ -9,9 +9,6 @@
                 padding: 0;
                 overflow: hidden;
             }
-            #slider {
-
-            }
             #prev {
                 position: absolute;
                 z-index: 100;
@@ -49,24 +46,42 @@
                         videoPosterUrl: 'http://www.html5videoplayer.net/poster/toystory.jpg'
                     }
                 ];
-                var source = $('#slide-view').html();
-                var template = Handlebars.compile(source);
+                var template = Handlebars.compile('<div class="slide"><video controls="controls" poster={{videoPosterUrl}}><source src={{videoUrl}} type="video/mp4" /><img alt="HTML5 MP4/H.264 Video" src={{videoPosterUrl}} title="No video playback capabilities, please download the video below" /></video></div>');
                 videoCollectionDataArr.forEach(function (item) {
                     var output = template(item);
                     $('#slider').append(output);
+                });
+                $('.slide').first().addClass('active');
+                $('.slide').hide();
+                $('.active').show();
+                $('#next').on('click', function () {
+                    $('.active').removeClass('active').addClass('oldActive');
+                    if ($('.oldActive').is(':last-child')) {
+                         $('.slide').first().addClass('active');
+                    } else {
+                        $('.oldActive').next().addClass('active');
+                    }
+                    $('.oldActive').removeClass('oldActive');
+                    $('.slide').hide();
+                    $('.active').show();
+                });
+                $('#prev').on('click', function () {
+                    $('.active').removeClass('active').addClass('oldActive');
+                    if ($('.oldActive').is(':first-child')) {
+                        $('.slide').last().addClass('active');
+                    } else {
+                        $('.oldActive').prev().addClass('active');
+                    }
+                    $('.oldActive').removeClass('oldActive');
+                    $('.slide').hide();
+                    $('.active').show();
                 });
             });
         </script>
     </head>
     <body>
-        <div id="slider">
-            <img src="" alt="<" id="prev">
-            <script type="text/x-handlebars-template" id="slide-view">
-                <div class="slide">
-                    <video controls="controls" poster={{videoPosterUrl}}><source src={{videoUrl}} type="video/mp4" /><img alt="HTML5 MP4/H.264 Video" src={{videoPosterUrl}} title="No video playback capabilities, please download the video below" /></video>
-                </div>
-            </script>
-            <img src="" alt=">" id="next">
-        </div>
+        <img src="" alt="<" id="prev">
+        <img src="" alt=">" id="next">
+        <div id="slider"></div>
     </body>
 </html>
