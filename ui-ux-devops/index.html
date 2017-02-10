@@ -9,7 +9,21 @@
                 padding: 0;
                 overflow: hidden;
             }
-            #slider {}
+            #slider {
+
+            }
+            #prev {
+                position: absolute;
+                z-index: 100;
+                left: 1px;
+                cursor: pointer;
+            }
+            #next {
+                position: absolute;
+                z-index: 100;
+                right: 1px;
+                cursor: pointer;
+            }
             video {
                 position: absolute;
                 width: 100%;
@@ -45,14 +59,14 @@
         </script>
     </head>
     <body>
-        <!--<img src="" alt="<">-->
         <div id="slider">
+            <img src="" alt="<" id="prev">
             <script type="text/x-handlebars-template" id="slide-view">
                 <div class="slide">
                     <video controls="controls" poster={{videoPosterUrl}}><source src={{videoUrl}} type="video/mp4" /><img alt="HTML5 MP4/H.264 Video" src={{videoPosterUrl}} title="No video playback capabilities, please download the video below" /></video>
                 </div>
             </script>
+            <img src="" alt=">" id="next">
         </div>
-        <!--<img src="" alt=">">-->
     </body>
 </html>
