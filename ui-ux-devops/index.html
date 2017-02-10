@@ -32,55 +32,69 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js"></script>
         <script>
             $(function () {
-                var videoCollectionDataArr = [
-                    {
-                        videoUrl: 'http://www.html5videoplayer.net/videos/toystory.mp4',
-                        videoPosterUrl: 'http://www.html5videoplayer.net/poster/toystory.jpg'
-                    },
-                    {
-                        videoUrl: 'http://www.html5videoplayer.net/videos/toystory.mp4',
-                        videoPosterUrl: 'http://www.html5videoplayer.net/poster/toystory.jpg'
-                    },
-                    {
-                        videoUrl: 'http://www.html5videoplayer.net/videos/toystory.mp4',
-                        videoPosterUrl: 'http://www.html5videoplayer.net/poster/toystory.jpg'
-                    }
-                ];
-                var template = Handlebars.compile('<div class="slide"><video controls="controls" poster={{videoPosterUrl}}><source src={{videoUrl}} type="video/mp4" /><img alt="HTML5 MP4/H.264 Video" src={{videoPosterUrl}} title="No video playback capabilities, please download the video below" /></video></div>');
-                videoCollectionDataArr.forEach(function (item) {
-                    var output = template(item);
-                    $('#slider').append(output);
-                });
-                $('.slide').first().addClass('active');
-                $('.slide').hide();
-                $('.active').show();
-                $('#prev').on('click', function () {
-                    prevSlide();
-                });
-                $('#next').on('click', function () {
-                    nextSlide();
-                });
-                function prevSlide () {
+                slideInit();
+                function slideInit () {
+                    var videoCollectionDataArr = [
+                        {
+                            videoUrl: 'http://www.html5videoplayer.net/videos/toystory.mp4',
+                            videoPosterUrl: 'http://www.html5videoplayer.net/poster/toystory.jpg'
+                        },
+                        {
+                            videoUrl: 'http://www.html5videoplayer.net/videos/toystory.mp4',
+                            videoPosterUrl: 'http://www.html5videoplayer.net/poster/toystory.jpg'
+                        },
+                        {
+                            videoUrl: 'http://www.html5videoplayer.net/videos/toystory.mp4',
+                            videoPosterUrl: 'http://www.html5videoplayer.net/poster/toystory.jpg'
+                        }
+                    ];
+                    var template = Handlebars.compile('<div class="slide"><video controls="controls" poster={{videoPosterUrl}}><source src={{videoUrl}} type="video/mp4" /><img alt="HTML5 MP4/H.264 Video" src={{videoPosterUrl}} title="No video playback capabilities, please download the video below" /></video></div>');
+                    videoCollectionDataArr.forEach(function (item) {
+                        var output = template(item);
+                        $('#slider').append(output);
+                    });
+                    $('.slide').first().addClass('active');
+                    $('.slide').hide();
+                    $('.active').show();
+                    $('#prev').on('click', function () {
+                        prevSlide();
+                    });
+                    $('#next').on('click', function () {
+                        nextSlide();
+                    });
+                }
+                function slideBeginConfig () {
                     $('.active').removeClass('active').addClass('oldActive');
+                }
+                function slidePrevConfig () {
                     if ($('.oldActive').is(':first-child')) {
                         $('.slide').last().addClass('active');
                     } else {
                         $('.oldActive').prev().addClass('active');
                     }
-                    $('.oldActive').removeClass('oldActive');
-                    $('.slide').hide();
-                    $('.active').show();
                 }
-                function nextSlide () {
-                    $('.active').removeClass('active').addClass('oldActive');
+                function slideNextConfig () {
                     if ($('.oldActive').is(':last-child')) {
                         $('.slide').first().addClass('active');
                     } else {
                         $('.oldActive').next().addClass('active');
                     }
+                }
+                function slideEndConfig () {
                     $('.oldActive').removeClass('oldActive');
                     $('.slide').hide();
                     $('.active').show();
+                    $('video').trigger('pause');
+                }
+                function prevSlide () {
+                    slideBeginConfig();
+                    slidePrevConfig();
+                    slideEndConfig();
+                }
+                function nextSlide () {
+                    slideBeginConfig();
+                    slideNextConfig();
+                    slideEndConfig();
                 }
             });
         </script>
